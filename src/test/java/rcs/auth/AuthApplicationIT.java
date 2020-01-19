@@ -46,12 +46,12 @@ public class AuthApplicationIT {
     private final TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Before
-	@After
-	public void cleanup() {
-    	deleteUserRequest(adminUsername, adminPassword, testUsername);
-	}
+    @After
+    public void cleanup() {
+        deleteUserRequest(adminUsername, adminPassword, testUsername);
+    }
 
-	@Test
+    @Test
     public void testGetLoggedInUser() {
         // Arrange
 
@@ -197,7 +197,7 @@ public class AuthApplicationIT {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<UserRegistrationRequest> request = new HttpEntity<>(payload, headers);
+        HttpEntity<UserRegistrationRequest> request = new HttpEntity<>(payload, headers);
 
         return restTemplate.postForEntity(
                 createUrl("/api/users"),
@@ -256,9 +256,9 @@ public class AuthApplicationIT {
                 Void.class);
     }
 
-	private String createUrl(String path) {
-    	return baseUrl + path;
-	}
+    private String createUrl(String path) {
+        return baseUrl + path;
+    }
 
     public String login(String username, String password) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
