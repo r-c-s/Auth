@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b984abfb-c59a-4178-a7cf-19e530de517b" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1WXdk18TDbEcKaYP8QBOKXchuJ5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/rcs/secure/auth" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="rcs.auth.security" />
+      <recent name="rcs.auth.apis" />
+      <recent name="rcs.auth" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="rcs.secure.models" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="rcs.auth.models.api" />
+      <recent name="rcs.secure.auth" />
+      <recent name="rcs.secure.config" />
+      <recent name="rcs.secure.repositories" />
+      <recent name="rcs.secure" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\current user\IdeaProjects\Auth\src\main\java\rcs\secure\auth" />
+      <recent name="C:\Users\current user\IdeaProjects\Secure\src\main\java\rcs\secure\config" />
+      <recent name="C:\Users\current user\IdeaProjects\Secure\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.UserCredentialsRepositoryImplTest">
+    <configuration name="AuthApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.AuthApplication" />
+      <module name="Auth" />
+      <option name="VM_PARAMETERS" value="-Dapp.properties=&quot;$USER_HOME$/Desktop/app/auth/auth.properties.txt&quot;" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthApplicationIT" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.AuthApplicationIT" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea -Dapp.properties=&quot;$USER_HOME$/Desktop/app/auth/test.auth.properties.txt&quot; " />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthUtilsTest.testUserIdIsAdmin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth.utils" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.utils.AuthUtilsTest" />
+      <option name="METHOD_NAME" value="testUserIdIsAdmin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EndpointSecurityTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth.security" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.security.EndpointSecurityTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserApiTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth.apis" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.apis.UserApiTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserCredentialsRepositoryImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.repositories.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth.repositories" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.repositories.UserCredentialsRepositoryImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserCredentialsServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rcs.auth.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="rcs.auth.services" />
+      <option name="MAIN_CLASS_NAME" value="rcs.auth.services.UserCredentialsServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.UserCredentialsRepositoryImplTest" />
+        <item itemvalue="JUnit.EndpointSecurityTest" />
+        <item itemvalue="JUnit.AuthUtilsTest.testUserIdIsAdmin" />
+        <item itemvalue="JUnit.AuthApplicationIT" />
+        <item itemvalue="JUnit.UserCredentialsServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b984abfb-c59a-4178-a7cf-19e530de517b" name="Default Changelist" comment="" />
+      <created>1579300012619</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579300012619</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="692" y="228" key="#AuthApplication" timestamp="1579452348399">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="692" y="228" key="#AuthApplication/0.0.1920.1040@0.0.1920.1040" timestamp="1579452348399" />
+    <state x="557" y="186" key="#AuthApplicationIT" timestamp="1579452071229">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="557" y="186" key="#AuthApplicationIT/0.0.1920.1040@0.0.1920.1040" timestamp="1579452071229" />
+    <state x="557" y="174" key="#AuthApplicationIT_(1)" timestamp="1579469569533">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="557" y="174" key="#AuthApplicationIT_(1)/0.0.1920.1040@0.0.1920.1040" timestamp="1579469569533" />
+    <state x="868" y="288" key="#Project_Structure" timestamp="1579300378891">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="868" y="288" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1579300378891" />
+    <state x="765" y="228" key="#com.intellij.ide.util.MemberChooser" timestamp="1579454416368">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="228" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1579454416368" />
+    <state x="610" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1579441376696">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="610" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579441376696" />
+    <state x="756" y="378" width="407" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1579447797414">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="756" y="378" width="407" height="292" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1579447797414" />
+    <state x="756" y="399" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1579441378278">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="756" y="399" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040@0.0.1920.1040" timestamp="1579441378278" />
+    <state x="754" y="355" key="#com.intellij.refactoring.move.moveInner.MoveInnerDialog" timestamp="1579313642203">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="754" y="355" key="#com.intellij.refactoring.move.moveInner.MoveInnerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579313642203" />
+    <state x="745" y="349" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog" timestamp="1579323055788">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="745" y="349" key="#com.intellij.refactoring.move.moveInstanceMethod.MoveInstanceMethodDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579323055788" />
+    <state x="711" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1579463923591">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="711" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579463923591" />
+    <state x="930" y="201" width="870" height="596" key="#xdebugger.evaluate" timestamp="1579470028930">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="930" y="201" width="870" height="596" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1579470028930" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1579398319084">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1579398319084" />
+    <state width="1876" height="230" key="GridCell.Tab.0.bottom" timestamp="1579470012599">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579470012599" />
+    <state width="1876" height="230" key="GridCell.Tab.0.center" timestamp="1579470012599">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579470012599" />
+    <state width="1876" height="230" key="GridCell.Tab.0.left" timestamp="1579470012599">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579470012599" />
+    <state width="1876" height="230" key="GridCell.Tab.0.right" timestamp="1579470012599">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579470012599" />
+    <state width="1876" height="230" key="GridCell.Tab.1.bottom" timestamp="1579470015562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579470015562" />
+    <state width="1876" height="230" key="GridCell.Tab.1.center" timestamp="1579470015562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579470015562" />
+    <state width="1876" height="230" key="GridCell.Tab.1.left" timestamp="1579470015562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579470015562" />
+    <state width="1876" height="230" key="GridCell.Tab.1.right" timestamp="1579470015562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1876" height="230" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579470015562" />
+    <state x="490" y="174" key="Maven.ArtifactSearchDialog" timestamp="1579317805481">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="490" y="174" key="Maven.ArtifactSearchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579317805481" />
+    <state x="461" y="151" key="SettingsEditor" timestamp="1579447643632">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="151" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1579447643632" />
+    <state x="702" y="147" key="refactoring.ChangeSignatureDialog" timestamp="1579324664475">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="702" y="147" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579324664475" />
+    <state x="616" y="235" key="run.anything.popup" timestamp="1579464915238">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="235" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1579464915238" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1579447446374">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1579447446374" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.2.3.RELEASE/spring-web-5.2.3.RELEASE.jar!/org/springframework/web/filter/OncePerRequestFilter.class</url>
+          <line>36</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/5.2.1.RELEASE/spring-security-core-5.2.1.RELEASE-sources.jar!/org/springframework/security/authentication/ProviderManager.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
