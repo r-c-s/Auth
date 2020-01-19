@@ -40,26 +40,30 @@ public class AuthApplicationIT {
     @Value("${service.baseUrl}")
     private String baseUrl;
 
-    private final String testUsername = "username";
-    private final String testPassword = "password";
+    private final String testUserAUsername = "usernameA";
+    private final String testUserAPassword = "passwordA";
+    private final String testUserBUsername = "usernameB";
+    private final String testUserBPassword = "passwordB";
 
     private final TestRestTemplate restTemplate = new TestRestTemplate();
 
     @Before
     @After
     public void cleanup() {
-        deleteUserRequest(adminUsername, adminPassword, testUsername);
+        deleteUserRequest(adminUsername, adminPassword, testUserAUsername);
+        deleteUserRequest(adminUsername, adminPassword, testUserBUsername);
     }
 
     @Test
     public void testGetLoggedInUser() {
         // Arrange
+        createUserRequest(testUserAUsername, testUserAPassword);
 
         // Act
-        ResponseEntity<AuthenticatedUser> actual = getLoggedInUserRequest(adminUsername, adminPassword);
+        ResponseEntity<AuthenticatedUser> actual = getLoggedInUserRequest(testUserAUsername, testUserAPassword);
 
         // Assert
-        assertThat(actual.getBody().getUsername()).isEqualTo(adminUsername);
+        assertThat(actual.getBody().getUsername()).isEqualTo(testUserAUsername);
     }
 
     @Test
@@ -67,114 +71,126 @@ public class AuthApplicationIT {
         // Arrange
 
         // Act
-        ResponseEntity<Void> response = createUserRequest(testUsername, testPassword);
+        ResponseEntity<Void> response = createUserRequest(testUserAUsername, testUserAPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(login(testUsername, testPassword)).isNotNull();
+        assertThat(login(testUserAUsername, testUserAPassword)).isNotNull();
     }
 
     @Test
     public void testUpdateOwnPassword() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(testUsername, testPassword, testUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(testUserAUsername, testUserAPassword, testUserAUsername, newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(login(testUsername, testPassword)).isNull();
+        assertThat(login(testUserAUsername, testUserAPassword)).isNull();
 
         // new password works
-        assertThat(login(testUsername, newPassword)).isNotNull();
+        assertThat(login(testUserAUsername, newPassword)).isNotNull();
     }
 
     @Test
     public void testUpdateOthersPassword() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(testUserBUsername, testUserBPassword);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(testUsername, testPassword, adminUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(testUserAUsername, testUserAPassword, testUserBUsername, newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
+
+        // potential hacking victim's password hasn't changed
+        assertThat(login(testUserBUsername, testUserBPassword)).isNotNull();
     }
 
     @Test
-    public void testUpdatePasswordRequestIsAdmin() {
+    public void testUpdatePasswordRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(adminUsername, adminPassword, testUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(adminUsername, adminPassword, testUserAUsername, newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(login(testUsername, testPassword)).isNull();
+        assertThat(login(testUserAUsername, testUserAPassword)).isNull();
 
         // new password works
-        assertThat(login(testUsername, newPassword)).isNotNull();
+        assertThat(login(testUserAUsername, newPassword)).isNotNull();
     }
 
     @Test
     public void testUpdateAuthorityRequestIsUser() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
         UserAuthority newAuthority = UserAuthority.ADMIN;
 
         // Act
-        ResponseEntity<Void> response = updateAuthorityRequest(testUsername, testPassword, testUsername, newAuthority);
+        ResponseEntity<Void> response = updateAuthorityRequest(testUserAUsername, testUserAPassword, testUserAUsername, newAuthority);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
+
+        // authority hasn't changed
+        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getBody().getRoles())
+                .hasSameElementsAs(UserAuthority.USER.getRoles());
     }
 
     @Test
     public void testUpdateAuthorityRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
         UserAuthority newAuthority = UserAuthority.ADMIN;
 
         // Act
-        ResponseEntity<Void> response = updateAuthorityRequest(adminUsername, adminPassword, testUsername, newAuthority);
+        ResponseEntity<Void> response = updateAuthorityRequest(adminUsername, adminPassword, testUserAUsername, newAuthority);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(getLoggedInUserRequest(testUsername, testPassword).getBody().getRoles())
+        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getBody().getRoles())
                 .isEqualTo(UserAuthority.ADMIN.getRoles());
     }
 
     @Test
     public void testDeleteUserRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
 
         // Act
-        ResponseEntity<Void> response = deleteUserRequest(adminUsername, adminPassword, testUsername);
+        ResponseEntity<Void> response = deleteUserRequest(adminUsername, adminPassword, testUserAUsername);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getStatusCodeValue()).isEqualTo(500);
     }
 
     @Test
-    public void testDeleteUserRequestIsNotAdmin() {
+    public void testDeleteUserRequesterIsNotAdmin() {
         // Arrange
-        createUserRequest(testUsername, testPassword);
+        createUserRequest(testUserAUsername, testUserAPassword);
 
         // Act
-        ResponseEntity<Void> response = deleteUserRequest(testUsername, testPassword, testUsername);
+        ResponseEntity<Void> response = deleteUserRequest(testUserAUsername, testUserAPassword, testUserAUsername);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
+
+        // user has not been deleted
+        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword)).isNotNull();
     }
 
     private ResponseEntity<AuthenticatedUser> getLoggedInUserRequest(String username, String password) {

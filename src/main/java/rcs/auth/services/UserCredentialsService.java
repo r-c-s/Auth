@@ -1,5 +1,6 @@
 package rcs.auth.services;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -67,6 +68,10 @@ public class UserCredentialsService implements UserDetailsService {
     }
 
     public void delete(String username) {
-        repository.deleteById(username);
+        try {
+            repository.deleteById(username);
+        } catch (EmptyResultDataAccessException e){
+            throw new UsernameNotFoundException(username);
+        }
     }
 }
