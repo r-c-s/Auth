@@ -1,8 +1,0 @@
-rcs\auth\AuthApplicationIT.class
-rcs\auth\apis\UserApiTest.class
-rcs\auth\security\RestAuthenticationEntryPointTest.class
-rcs\auth\security\EndpointSecurityTest.class
-rcs\auth\services\UserCredentialsServiceTest.class
-rcs\auth\utils\AuthUtilsTest.class
-rcs\auth\testutils\InMemoryDataSourceTestBase.class
-rcs\auth\repositories\UserCredentialsRepositoryImplTest.class
