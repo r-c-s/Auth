@@ -3,7 +3,7 @@
 A simple service for user authentication
 
 #### Dependencies
-* [MySQL](dev.mysql.com/downloads/)
+* [MySQL](https://dev.mysql.com/downloads/)
 
 ##### Build
 
