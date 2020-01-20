@@ -5,10 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import rcs.auth.exceptions.UnauthorizedException;
 import rcs.auth.services.UserCredentialsService;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class AuthUtils {
@@ -19,16 +19,16 @@ public class AuthUtils {
         this.userCredentialsService = userCredentialsService;
     }
 
-    public User tryGetLoggedInUser() {
+    public Optional<User> tryGetLoggedInUser() {
         return tryGetLoggedInUser(SecurityContextHolder.getContext().getAuthentication());
     }
 
-    public User tryGetLoggedInUser(Authentication authentication) {
+    public Optional<User> tryGetLoggedInUser(Authentication authentication) {
         Object principal = authentication.getPrincipal();
         if (principal instanceof User) {
-            return (User) principal;
+            return Optional.of((User) principal);
         } else {
-            throw new UnauthorizedException();
+            return Optional.empty();
         }
     }
 

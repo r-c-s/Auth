@@ -1,9 +1,9 @@
 package rcs.auth.apis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import rcs.auth.models.api.AuthenticatedUser;
 import rcs.auth.models.api.UpdateAuthorityRequest;
@@ -26,14 +26,14 @@ public class UserApi {
 
     @GetMapping("/authenticate")
     public ResponseEntity<AuthenticatedUser> getLoggedInUser() {
-        User user = authUtils.tryGetLoggedInUser();
-        AuthenticatedUser response = new AuthenticatedUser(
-                user.getUsername(),
-                user.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
-                        .collect(Collectors.toSet()));
-        return ResponseEntity.ok()
-                .body(response);
+        return authUtils.tryGetLoggedInUser()
+                .map(user -> new AuthenticatedUser(
+                            user.getUsername(),
+                            user.getAuthorities().stream()
+                                    .map(GrantedAuthority::getAuthority)
+                                    .collect(Collectors.toSet())))
+                .map(authenticatedUser -> ResponseEntity.ok().body(authenticatedUser))
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     @PostMapping("/users")

@@ -16,6 +16,7 @@ import rcs.auth.models.db.UserAuthority;
 import rcs.auth.services.UserCredentialsService;
 import rcs.auth.utils.AuthUtils;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +46,7 @@ public class UserApiTest {
                         .collect(Collectors.toList()));
 
         when(authUtils.tryGetLoggedInUser())
-                .thenReturn(user);
+                .thenReturn(Optional.of(user));
 
         // Act
         ResponseEntity<AuthenticatedUser> actual = target.getLoggedInUser();
@@ -56,6 +57,19 @@ public class UserApiTest {
                 .containsAll(user.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testGetLoggedInUserWhenNotLoggedIn() {
+        // Arrange
+        when(authUtils.tryGetLoggedInUser())
+                .thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<AuthenticatedUser> actual = target.getLoggedInUser();
+
+        // Assert
+        assertThat(actual.getStatusCodeValue()).isEqualTo(401);
     }
 
     @Test

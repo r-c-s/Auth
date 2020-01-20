@@ -1,12 +1,13 @@
 package rcs.auth.security;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import rcs.auth.exceptions.UnauthorizedException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 public final class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -15,8 +16,8 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
     public void commence(
             HttpServletRequest request,
             HttpServletResponse response,
-            AuthenticationException exception) {
+            AuthenticationException exception) throws IOException {
 
-        throw new UnauthorizedException(exception);
+        response.sendError(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
     }
 }

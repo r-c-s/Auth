@@ -1,8 +1,13 @@
 package rcs.auth;
 
-import org.junit.After;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,39 +36,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class AuthApplicationIT {
 
-    @Value("${admin.username}")
-    private String adminUsername;
+    @Getter
+    @AllArgsConstructor
+    private static final class LoginCredentials {
+        private String username;
+        private String password;
+    }
 
-    @Value("${admin.password}")
-    private String adminPassword;
+    private TestRestTemplate restTemplate = new TestRestTemplate();
+    private LoginCredentials admin = new LoginCredentials("testAdmin", "password");
+    private LoginCredentials userA = new LoginCredentials("usernameA", "passwordA");
+    private LoginCredentials userB = new LoginCredentials("usernameB", "passwordB");
 
     @Value("${service.baseUrl}")
     private String baseUrl;
 
-    private final String testUserAUsername = "usernameA";
-    private final String testUserAPassword = "passwordA";
-    private final String testUserBUsername = "usernameB";
-    private final String testUserBPassword = "passwordB";
-
-    private final TestRestTemplate restTemplate = new TestRestTemplate();
-
     @Before
-    @After
     public void cleanup() {
-        deleteUserRequest(adminUsername, adminPassword, testUserAUsername);
-        deleteUserRequest(adminUsername, adminPassword, testUserBUsername);
+        deleteUserRequest(admin, userA.getUsername());
+        deleteUserRequest(admin, userB.getUsername());
     }
+
+    @Rule
+    public TestRule watchman = new TestWatcher() {
+        // unlike @After, this also runs when exceptions are thrown inside test methods
+        @Override
+        protected void finished(Description ignored) {
+            cleanup();
+        }
+    };
 
     @Test
     public void testGetLoggedInUser() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
 
         // Act
-        ResponseEntity<AuthenticatedUser> actual = getLoggedInUserRequest(testUserAUsername, testUserAPassword);
+        ResponseEntity<AuthenticatedUser> actual = getLoggedInUserRequest(userA);
 
         // Assert
-        assertThat(actual.getBody().getUsername()).isEqualTo(testUserAUsername);
+        assertThat(actual.getBody().getUsername()).isEqualTo(userA.getUsername());
     }
 
     @Test
@@ -71,131 +83,131 @@ public class AuthApplicationIT {
         // Arrange
 
         // Act
-        ResponseEntity<Void> response = createUserRequest(testUserAUsername, testUserAPassword);
+        ResponseEntity<Void> response = createUserRequest(userA);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(login(testUserAUsername, testUserAPassword)).isNotNull();
+        assertThat(login(userA)).isNotNull();
     }
 
     @Test
     public void testUpdateOwnPassword() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(testUserAUsername, testUserAPassword, testUserAUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(userA, userA.getUsername(), newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(login(testUserAUsername, testUserAPassword)).isNull();
+        assertThat(login(userA)).isNull();
 
         // new password works
-        assertThat(login(testUserAUsername, newPassword)).isNotNull();
+        assertThat(login(new LoginCredentials(userA.getUsername(), newPassword))).isNotNull();
     }
 
     @Test
     public void testUpdateOthersPassword() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
-        createUserRequest(testUserBUsername, testUserBPassword);
+        createUserRequest(userA);
+        createUserRequest(userB);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(testUserAUsername, testUserAPassword, testUserBUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(userA, userB.getUsername(), newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
 
         // potential hacking victim's password hasn't changed
-        assertThat(login(testUserBUsername, testUserBPassword)).isNotNull();
+        assertThat(login(userB)).isNotNull();
     }
 
     @Test
     public void testUpdatePasswordRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
         String newPassword = "newPassword";
 
         // Act
-        ResponseEntity<Void> response = updatePasswordRequest(adminUsername, adminPassword, testUserAUsername, newPassword);
+        ResponseEntity<Void> response = updatePasswordRequest(admin, userA.getUsername(), newPassword);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(login(testUserAUsername, testUserAPassword)).isNull();
+        assertThat(login(userA)).isNull();
 
         // new password works
-        assertThat(login(testUserAUsername, newPassword)).isNotNull();
+        assertThat(login(new LoginCredentials(userA.getUsername(), newPassword))).isNotNull();
     }
 
     @Test
     public void testUpdateAuthorityRequestIsUser() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
         UserAuthority newAuthority = UserAuthority.ADMIN;
 
         // Act
-        ResponseEntity<Void> response = updateAuthorityRequest(testUserAUsername, testUserAPassword, testUserAUsername, newAuthority);
+        ResponseEntity<Void> response = updateAuthorityRequest(userA, userA.getUsername(), newAuthority);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
 
         // authority hasn't changed
-        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getBody().getRoles())
+        assertThat(getLoggedInUserRequest(userA).getBody().getRoles())
                 .hasSameElementsAs(UserAuthority.USER.getRoles());
     }
 
     @Test
     public void testUpdateAuthorityRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
         UserAuthority newAuthority = UserAuthority.ADMIN;
 
         // Act
-        ResponseEntity<Void> response = updateAuthorityRequest(adminUsername, adminPassword, testUserAUsername, newAuthority);
+        ResponseEntity<Void> response = updateAuthorityRequest(admin, userA.getUsername(), newAuthority);
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getBody().getRoles())
+        assertThat(getLoggedInUserRequest(userA).getBody().getRoles())
                 .isEqualTo(UserAuthority.ADMIN.getRoles());
     }
 
     @Test
     public void testDeleteUserRequesterIsAdmin() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
 
         // Act
-        ResponseEntity<Void> response = deleteUserRequest(adminUsername, adminPassword, testUserAUsername);
+        ResponseEntity<Void> response = deleteUserRequest(admin, userA.getUsername());
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword).getStatusCodeValue()).isEqualTo(500);
+        assertThat(getLoggedInUserRequest(userA).getStatusCodeValue()).isEqualTo(401);
     }
 
     @Test
     public void testDeleteUserRequesterIsNotAdmin() {
         // Arrange
-        createUserRequest(testUserAUsername, testUserAPassword);
+        createUserRequest(userA);
 
         // Act
-        ResponseEntity<Void> response = deleteUserRequest(testUserAUsername, testUserAPassword, testUserAUsername);
+        ResponseEntity<Void> response = deleteUserRequest(userA, userA.getUsername());
 
         // Assert
         assertThat(response.getStatusCodeValue()).isEqualTo(403);
 
         // user has not been deleted
-        assertThat(getLoggedInUserRequest(testUserAUsername, testUserAPassword)).isNotNull();
+        assertThat(getLoggedInUserRequest(userA)).isNotNull();
     }
 
-    private ResponseEntity<AuthenticatedUser> getLoggedInUserRequest(String username, String password) {
+    private ResponseEntity<AuthenticatedUser> getLoggedInUserRequest(LoginCredentials creds) {
         HttpHeaders headers = new HttpHeaders();
-        String authToken = login(username, password);
+        String authToken = login(creds);
         headers.add("Cookie", "JSESSIONID=" + authToken);
 
         HttpEntity<Object> request = new HttpEntity<>(null, headers);
@@ -207,8 +219,8 @@ public class AuthApplicationIT {
                 AuthenticatedUser.class);
     }
 
-    private ResponseEntity<Void> createUserRequest(String username, String password) {
-        UserRegistrationRequest payload = new UserRegistrationRequest(username, password);
+    private ResponseEntity<Void> createUserRequest(LoginCredentials creds) {
+        UserRegistrationRequest payload = new UserRegistrationRequest(creds.getUsername(), creds.getPassword());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -221,9 +233,9 @@ public class AuthApplicationIT {
                 Void.class);
     }
 
-    private ResponseEntity<Void> deleteUserRequest(String username, String password, String usernameToDelete) {
+    private ResponseEntity<Void> deleteUserRequest(LoginCredentials creds, String usernameToDelete) {
         HttpHeaders headers = new HttpHeaders();
-        String authToken = login(username, password);
+        String authToken = login(creds);
         headers.add("Cookie", "JSESSIONID=" + authToken);
 
         HttpEntity<Object> request = new HttpEntity<>(null, headers);
@@ -235,11 +247,11 @@ public class AuthApplicationIT {
                 Void.class);
     }
 
-    private ResponseEntity<Void> updatePasswordRequest(String username, String password, String usernameToUpdate, String newPassword) {
+    private ResponseEntity<Void> updatePasswordRequest(LoginCredentials creds, String usernameToUpdate, String newPassword) {
         UpdatePasswordRequest payload = new UpdatePasswordRequest(newPassword);
 
         HttpHeaders headers = new HttpHeaders();
-        String authToken = login(username, password);
+        String authToken = login(creds);
         headers.add("Cookie", "JSESSIONID=" + authToken);
 
         HttpEntity<Object> request = new HttpEntity<>(payload, headers);
@@ -252,15 +264,14 @@ public class AuthApplicationIT {
     }
 
     private ResponseEntity<Void> updateAuthorityRequest(
-            String username,
-            String password,
+            LoginCredentials creds,
             String usernameToUpdate,
             UserAuthority newAuthority) {
 
         UpdateAuthorityRequest payload = new UpdateAuthorityRequest(newAuthority);
 
         HttpHeaders headers = new HttpHeaders();
-        String authToken = login(username, password);
+        String authToken = login(creds);
         headers.add("Cookie", "JSESSIONID=" + authToken);
 
         HttpEntity<Object> request = new HttpEntity<>(payload, headers);
@@ -276,10 +287,10 @@ public class AuthApplicationIT {
         return baseUrl + path;
     }
 
-    public String login(String username, String password) {
+    public String login(LoginCredentials creds) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
-        params.set("username", username);
-        params.set("password", password);
+        params.set("username", creds.getUsername());
+        params.set("password", creds.getPassword());
 
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(params, new HttpHeaders());
 

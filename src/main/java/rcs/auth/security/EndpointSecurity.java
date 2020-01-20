@@ -1,7 +1,6 @@
 package rcs.auth.security;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import rcs.auth.utils.AuthUtils;
 
@@ -15,7 +14,8 @@ public class EndpointSecurity {
     }
 
     public boolean canUpdatePassword(Authentication authentication, String username) {
-        User user = authUtils.tryGetLoggedInUser(authentication);
-        return authUtils.isAdmin(user) || user.getUsername().equals(username);
+        return authUtils.tryGetLoggedInUser(authentication)
+                .map(user -> authUtils.isAdmin(user) || user.getUsername().equals(username))
+                .orElse(false);
     }
 }

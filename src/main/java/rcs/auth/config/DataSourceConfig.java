@@ -24,8 +24,7 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource() {
-        return DataSourceBuilder
-                .create()
+        return DataSourceBuilder.create()
                 .username(username)
                 .password(password)
                 .url(url)

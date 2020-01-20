@@ -9,11 +9,11 @@ import org.junit.runner.RunWith;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import rcs.auth.exceptions.UnauthorizedException;
 import rcs.auth.services.UserCredentialsService;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,10 +38,10 @@ public class AuthUtilsTest {
                 .thenReturn(user);
 
         // Act
-        User actual = target.tryGetLoggedInUser(authentication);
+        Optional<User> actual = target.tryGetLoggedInUser(authentication);
 
         // Assert
-        assertThat(actual).isSameAs(user);
+        assertThat(actual.get()).isSameAs(user);
     }
 
     @Test
@@ -52,10 +52,11 @@ public class AuthUtilsTest {
         when(authentication.getPrincipal())
                 .thenReturn(user);
 
-        // Act & assert
-        assertThrows(
-                UnauthorizedException.class,
-                () -> target.tryGetLoggedInUser(authentication));
+        // Act
+        Optional<User> actual = target.tryGetLoggedInUser(authentication);
+
+        // Assert
+        assertThat(actual).isEmpty();
     }
 
     @Test

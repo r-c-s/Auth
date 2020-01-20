@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import rcs.auth.utils.AuthUtils;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,9 +29,9 @@ public class EndpointSecurityTest {
 
     @Test
     @Parameters({
-            "true  | other | true",
-            "false  | username  | true",
-            "false  | other  | false"
+            "true | other | true",
+            "false | username | true",
+            "false | other | false"
     })
     public void testCanUpdatePassword(
             boolean requesterIsAdmin,
@@ -41,7 +43,7 @@ public class EndpointSecurityTest {
 
         User requester = mock(User.class);
         when(authUtils.tryGetLoggedInUser(authentication))
-                .thenReturn(requester);
+                .thenReturn(Optional.of(requester));
 
         when(authUtils.isAdmin(requester))
                 .thenReturn(requesterIsAdmin);
