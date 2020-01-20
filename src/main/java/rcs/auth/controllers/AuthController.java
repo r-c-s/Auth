@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import rcs.auth.models.api.AuthenticatedUser;
 import rcs.auth.models.api.UpdateAuthorityRequest;
 import rcs.auth.models.api.UpdatePasswordRequest;
-import rcs.auth.models.api.UserRegistrationRequest;
+import rcs.auth.models.api.LoginCredentials;
 import rcs.auth.services.UserCredentialsService;
 import rcs.auth.utils.AuthUtils;
 
@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Void> createUser(@RequestBody UserRegistrationRequest request) {
+    public ResponseEntity<Void> createUser(@RequestBody LoginCredentials request) {
         userCredentialsService.save(request);
         return ResponseEntity.ok()
                 .build();

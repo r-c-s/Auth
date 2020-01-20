@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rcs.auth.exceptions.FailedToUpdateUserException;
 import rcs.auth.exceptions.UsernameAlreadyExistsException;
 import rcs.auth.exceptions.UsernameNotFoundException;
-import rcs.auth.models.api.UserRegistrationRequest;
+import rcs.auth.models.api.LoginCredentials;
 import rcs.auth.models.db.UserAuthority;
 import rcs.auth.models.db.UserCredentials;
 import rcs.auth.repositories.UserCredentialsRepository;
@@ -41,7 +41,7 @@ public class UserCredentialsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public void save(UserRegistrationRequest request) {
+    public void save(LoginCredentials request) {
         String username = request.getUsername();
         if (repository.existsById(username)) {
             throw new UsernameAlreadyExistsException(username);

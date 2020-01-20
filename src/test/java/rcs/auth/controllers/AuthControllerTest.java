@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import rcs.auth.models.api.AuthenticatedUser;
 import rcs.auth.models.api.UpdatePasswordRequest;
-import rcs.auth.models.api.UserRegistrationRequest;
+import rcs.auth.models.api.LoginCredentials;
 import rcs.auth.models.db.UserAuthority;
 import rcs.auth.services.UserCredentialsService;
 import rcs.auth.utils.AuthUtils;
@@ -75,7 +75,7 @@ public class AuthControllerTest {
     @Test
     public void testCreateUser() {
         // Arrange
-        UserRegistrationRequest request = new UserRegistrationRequest("username", "password");
+        LoginCredentials request = new LoginCredentials("username", "password");
 
         // Act
         ResponseEntity<Void> actual = target.createUser(request);

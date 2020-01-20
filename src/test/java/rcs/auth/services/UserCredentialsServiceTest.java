@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import rcs.auth.exceptions.UsernameAlreadyExistsException;
 import rcs.auth.exceptions.UsernameNotFoundException;
-import rcs.auth.models.api.UserRegistrationRequest;
+import rcs.auth.models.api.LoginCredentials;
 import rcs.auth.models.db.UserAuthority;
 import rcs.auth.models.db.UserCredentials;
 import rcs.auth.repositories.UserCredentialsRepository;
@@ -71,7 +71,7 @@ public class UserCredentialsServiceTest {
     @Test
     public void testSave() {
         // Arrange
-        UserRegistrationRequest request = new UserRegistrationRequest("username", "password");
+        LoginCredentials request = new LoginCredentials("username", "password");
         when(encoder.encode(request.getPassword()))
                 .thenReturn("p455w0rd");
 
@@ -85,7 +85,7 @@ public class UserCredentialsServiceTest {
     @Test
     public void testSaveAlreadyExists() {
         // Arrange
-        UserRegistrationRequest request = new UserRegistrationRequest("username", "password");
+        LoginCredentials request = new LoginCredentials("username", "password");
         when(repository.existsById(request.getUsername()))
                 .thenReturn(true);
 
