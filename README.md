@@ -2,8 +2,6 @@
 
 A simple service for user authentication
 
-<br>
-
 ##### Build
 
 <pre>
