@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserApiTest {
+public class AuthApiTest {
 
     @Mock
     private AuthUtils authUtils;
@@ -33,7 +33,7 @@ public class UserApiTest {
     private UserCredentialsService userCredentialsService;
 
     @InjectMocks
-    private UserApi target;
+    private AuthApi target;
 
     @Test
     public void testGetLoggedInUser() {

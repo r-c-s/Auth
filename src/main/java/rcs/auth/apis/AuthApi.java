@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class UserApi {
+public class AuthApi {
 
     @Autowired
     private AuthUtils authUtils;
