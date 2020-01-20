@@ -1,4 +1,4 @@
-package rcs.auth.apis;
+package rcs.auth.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AuthApiTest {
+public class AuthControllerTest {
 
     @Mock
     private AuthUtils authUtils;
@@ -33,7 +33,7 @@ public class AuthApiTest {
     private UserCredentialsService userCredentialsService;
 
     @InjectMocks
-    private AuthApi target;
+    private AuthController target;
 
     @Test
     public void testGetLoggedInUser() {

@@ -1,4 +1,4 @@
-package rcs.auth.apis;
+package rcs.auth.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class AuthApi {
+public class AuthController {
 
     @Autowired
     private AuthUtils authUtils;
