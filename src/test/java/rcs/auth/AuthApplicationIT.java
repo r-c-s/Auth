@@ -48,8 +48,8 @@ public class AuthApplicationIT {
     private LoginCredentials userA = new LoginCredentials("usernameA", "passwordA");
     private LoginCredentials userB = new LoginCredentials("usernameB", "passwordB");
 
-    @Value("${service.baseUrl}")
-    private String baseUrl;
+    @Value("${server.port}")
+    private int port;
 
     @Before
     public void cleanup() {
@@ -284,7 +284,7 @@ public class AuthApplicationIT {
     }
 
     private String createUrl(String path) {
-        return baseUrl + path;
+        return "http://localhost:" + port + path;
     }
 
     public String login(LoginCredentials creds) {
