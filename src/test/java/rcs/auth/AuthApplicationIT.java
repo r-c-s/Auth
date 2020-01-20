@@ -2,6 +2,7 @@ package rcs.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.bytebuddy.utility.RandomString;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,8 +46,8 @@ public class AuthApplicationIT {
 
     private TestRestTemplate restTemplate = new TestRestTemplate();
     private LoginCredentials admin = new LoginCredentials("testAdmin", "password");
-    private LoginCredentials userA = new LoginCredentials("usernameA", "passwordA");
-    private LoginCredentials userB = new LoginCredentials("usernameB", "passwordB");
+    private LoginCredentials userA = new LoginCredentials(RandomString.make(), RandomString.make());
+    private LoginCredentials userB = new LoginCredentials(RandomString.make(), RandomString.make());
 
     @Value("${server.port}")
     private int port;

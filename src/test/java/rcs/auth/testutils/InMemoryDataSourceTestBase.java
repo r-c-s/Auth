@@ -16,8 +16,7 @@ public class InMemoryDataSourceTestBase {
     }
 
     private DataSource dataSource() {
-        return DataSourceBuilder
-                .create()
+        return DataSourceBuilder.create()
                 .username("username")
                 .password("password")
                 .driverClassName("org.h2.Driver")
