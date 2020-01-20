@@ -42,9 +42,12 @@ public class UserCredentialsRepositoryImpl implements UserCredentialsRepositoryC
     }
 
     private String updateQuery(String username, String field, Object newValue) {
-        return "update user_credentials c " +
-                "set c." + field + " = '" + newValue + "' " +
-                "where c." + UserCredentials.Fields.username + " = '" + username + "'";
+        return "update ${table} c set c.${fieldToUpdate} = '${newValue}' where c.${fieldToMatch} = '${valueToMatch}'"
+                .replace("${table}", UserCredentials.tableName)
+                .replace("${fieldToUpdate}", field)
+                .replace("${newValue}", newValue.toString())
+                .replace("${fieldToMatch}", UserCredentials.Fields.username)
+                .replace("${valueToMatch}", username);
     }
 
     private boolean updateSuccessful(int updateCount) {
