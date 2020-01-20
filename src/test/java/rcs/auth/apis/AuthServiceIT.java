@@ -32,14 +32,14 @@ public class AuthServiceIT {
     private static LoginCredentials userA = new LoginCredentials(RandomString.make(), RandomString.make());
     private static LoginCredentials userB = new LoginCredentials(RandomString.make(), RandomString.make());
 
-    @Value("${service.baseUrl}")
-    private String authServiceBaseUrl;
+    @Value("${server.port}")
+    private int port;
 
     private AuthService target;
 
     @Before
     public void setup() {
-        target = new AuthService(authServiceBaseUrl, new TestRestTemplate().getRestTemplate());
+        target = new AuthService("http://localhost:" + port, new TestRestTemplate().getRestTemplate());
     }
 
     @Rule
