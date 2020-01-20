@@ -1,6 +1,5 @@
 package rcs.auth.apis;
 
-import lombok.SneakyThrows;
 import net.bytebuddy.utility.RandomString;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,6 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import rcs.auth.models.api.AuthenticatedUser;
 import rcs.auth.models.api.LoginCredentials;
 import rcs.auth.models.db.UserAuthority;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,10 +47,12 @@ public class AuthServiceIT {
     public TestRule watchman = new TestWatcher() {
         // unlike @After, this also runs when exceptions are thrown inside test methods
         @Override
-        @SneakyThrows
         protected void finished(Description ignored) {
-            target.delete(admin, userA.getUsername());
-            target.delete(admin, userB.getUsername());
+            Stream.of(userA, userB).forEach(user ->
+                    assertThat(target.delete(admin, user.getUsername()).getStatusCodeValue())
+                            .satisfiesAnyOf(
+                                    status -> assertThat(status).isEqualTo(200),
+                                    status -> assertThat(status).isEqualTo(404)));
         }
     };
 
