@@ -28,7 +28,7 @@ public class AuthService {
         this.restTemplate = restTemplate;
     }
 
-    public String login(LoginCredentials creds) {
+    public Optional<String> login(LoginCredentials creds) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.set("username", creds.getUsername());
         params.set("password", creds.getPassword());
@@ -43,8 +43,7 @@ public class AuthService {
 
         return Optional.ofNullable(response.getHeaders().get("Set-Cookie"))
                 .map(cookies -> cookies.get(0))
-                .map(setCookieHeader -> getCookieValue(authTokenName, setCookieHeader))
-                .orElse(null);
+                .map(setCookieHeader -> getCookieValue(authTokenName, setCookieHeader));
     }
 
     public ResponseEntity<AuthenticatedUser> authenticate(String authToken) {
@@ -61,8 +60,9 @@ public class AuthService {
     }
 
     public ResponseEntity<AuthenticatedUser> authenticate(LoginCredentials creds) {
-        String authToken = login(creds);
-        return authenticate(authToken);
+        return login(creds)
+                .map(this::authenticate)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     public ResponseEntity<Void> register(LoginCredentials creds) {
@@ -83,53 +83,61 @@ public class AuthService {
     }
 
     public ResponseEntity<Void> delete(LoginCredentials creds, String usernameToDelete) {
-        HttpHeaders headers = new HttpHeaders();
-        String authToken = login(creds);
-        headers.add("Cookie", "JSESSIONID=" + authToken);
+        return login(creds)
+                .map(authToken -> {
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.add("Cookie", "JSESSIONID=" + authToken);
 
-        HttpEntity<Map<String, String>> request = new HttpEntity<>(null, headers);
+                    HttpEntity<Map<String, String>> request = new HttpEntity<>(null, headers);
 
-        return restTemplate.exchange(
-                createUrl("/api/users/" + usernameToDelete),
-                HttpMethod.DELETE,
-                request,
-                Void.class);
+                    return restTemplate.exchange(
+                            createUrl("/api/users/" + usernameToDelete),
+                            HttpMethod.DELETE,
+                            request,
+                            Void.class);
+                })
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     public ResponseEntity<Void> updateAuthority(
             LoginCredentials creds,
             String usernameToUpdate,
             UserAuthority newAuthority) {
+        return login(creds)
+                .map(authToken -> {
+                    UpdateAuthorityRequest payload = new UpdateAuthorityRequest(newAuthority);
 
-        UpdateAuthorityRequest payload = new UpdateAuthorityRequest(newAuthority);
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.add("Cookie", authTokenName + "=" + authToken);
 
-        HttpHeaders headers = new HttpHeaders();
-        String authToken = login(creds);
-        headers.add("Cookie", authTokenName + "=" + authToken);
+                    HttpEntity<Object> request = new HttpEntity<>(payload, headers);
 
-        HttpEntity<Object> request = new HttpEntity<>(payload, headers);
-
-        return restTemplate.exchange(
-                createUrl("/api/users/" + usernameToUpdate + "/authority"),
-                HttpMethod.PUT,
-                request,
-                Void.class);
+                    return restTemplate.exchange(
+                            createUrl("/api/users/" + usernameToUpdate + "/authority"),
+                            HttpMethod.PUT,
+                            request,
+                            Void.class);
+                })
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     public ResponseEntity<Void> updatePassword(LoginCredentials creds, String usernameToUpdate, String newPassword) {
-        UpdatePasswordRequest payload = new UpdatePasswordRequest(newPassword);
+        return login(creds)
+                .map(authToken -> {
+                    UpdatePasswordRequest payload = new UpdatePasswordRequest(newPassword);
 
-        HttpHeaders headers = new HttpHeaders();
-        String authToken = login(creds);
-        headers.add("Cookie", authTokenName + "=" + authToken);
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.add("Cookie", authTokenName + "=" + authToken);
 
-        HttpEntity<Object> request = new HttpEntity<>(payload, headers);
+                    HttpEntity<Object> request = new HttpEntity<>(payload, headers);
 
-        return restTemplate.exchange(
-                createUrl("/api/users/" + usernameToUpdate + "/password"),
-                HttpMethod.PUT,
-                request,
-                Void.class);
+                    return restTemplate.exchange(
+                            createUrl("/api/users/" + usernameToUpdate + "/password"),
+                            HttpMethod.PUT,
+                            request,
+                            Void.class);
+                })
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     private String getCookieValue(String cookieName, String setCookieHeader) {

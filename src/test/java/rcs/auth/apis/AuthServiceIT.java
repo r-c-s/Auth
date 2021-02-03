@@ -43,9 +43,9 @@ public class AuthServiceIT {
         target = new AuthService("http://localhost:" + port, new TestRestTemplate().getRestTemplate());
     }
 
+    // unlike @After, this also runs when exceptions are thrown inside test methods
     @Rule
     public TestRule watchman = new TestWatcher() {
-        // unlike @After, this also runs when exceptions are thrown inside test methods
         @Override
         protected void finished(Description ignored) {
             Stream.of(userA, userB).forEach(user ->
@@ -93,7 +93,7 @@ public class AuthServiceIT {
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(target.login(userA)).isNull();
+        assertThat(target.login(userA)).isEmpty();
 
         // new password works
         assertThat(target.login(new LoginCredentials(userA.getUsername(), newPassword))).isNotNull();
@@ -129,7 +129,7 @@ public class AuthServiceIT {
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         // old password no longer works
-        assertThat(target.login(userA)).isNull();
+        assertThat(target.login(userA)).isEmpty();
 
         // new password works
         assertThat(target.login(new LoginCredentials(userA.getUsername(), newPassword))).isNotNull();
