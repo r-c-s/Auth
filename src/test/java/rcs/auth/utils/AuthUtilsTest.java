@@ -1,6 +1,5 @@
 package rcs.auth.utils;
 
-import com.google.common.collect.ImmutableList;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;
@@ -11,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import rcs.auth.services.UserCredentialsService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -69,7 +69,7 @@ public class AuthUtilsTest {
         // Arrange
         User user = mock(User.class);
         when(user.getAuthorities())
-                .thenReturn(ImmutableList.of(new SimpleGrantedAuthority(role)));
+                .thenReturn(List.of(new SimpleGrantedAuthority(role)));
 
         String username = "username";
         when(userCredentialsService.loadUserByUsername(username))
@@ -92,7 +92,7 @@ public class AuthUtilsTest {
         // Arrange
         User user = mock(User.class);
         when(user.getAuthorities())
-                .thenReturn(ImmutableList.of(new SimpleGrantedAuthority(role)));
+                .thenReturn(List.of(new SimpleGrantedAuthority(role)));
 
         // Act
         boolean actual = target.isAdmin(user);

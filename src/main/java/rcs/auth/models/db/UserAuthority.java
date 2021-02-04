@@ -1,7 +1,6 @@
 package rcs.auth.models.db;
 
-import com.google.common.collect.ImmutableSet;
-
+import java.util.Arrays;
 import java.util.Set;
 
 public enum UserAuthority {
@@ -11,7 +10,7 @@ public enum UserAuthority {
     private Set<String> roles;
 
     UserAuthority(String... roles) {
-        this.roles = ImmutableSet.copyOf(roles);
+        this.roles = Set.copyOf(Arrays.asList(roles));
     }
 
     public Set<String> getRoles() {

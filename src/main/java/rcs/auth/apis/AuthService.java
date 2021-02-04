@@ -1,6 +1,5 @@
 package rcs.auth.apis;
 
-import com.google.common.collect.ImmutableMap;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -66,7 +65,7 @@ public class AuthService {
     }
 
     public ResponseEntity<Void> register(LoginCredentials creds) {
-        Map<String, String> payload = ImmutableMap.of(
+        Map<String, String> payload = Map.of(
                 "username", creds.getUsername(),
                 "password", creds.getPassword());
 

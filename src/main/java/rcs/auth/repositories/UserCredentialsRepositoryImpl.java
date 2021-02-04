@@ -1,6 +1,5 @@
 package rcs.auth.repositories;
 
-import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import rcs.auth.models.db.UserAuthority;
@@ -11,7 +10,7 @@ import java.util.Map;
 @Repository
 public class UserCredentialsRepositoryImpl implements UserCredentialsRepositoryCustom {
 
-    private static final Map<UserAuthority, Integer> authorityToDbValue = ImmutableMap.of(
+    private static final Map<UserAuthority, Integer> authorityToDbValue = Map.of(
             UserAuthority.USER, 0,
             UserAuthority.ADMIN, 1);
 
