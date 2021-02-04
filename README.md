@@ -5,7 +5,6 @@ A simple service for user authentication
 #### Dependencies
 * [AuthApi](https://github.com/r-c-s/AuthApi)
 * [MySQL](https://dev.mysql.com/downloads/)
-* AuthApi
 
 ##### Build
 
@@ -24,6 +23,8 @@ mvn test
 <pre>
 mvn clean test-compile failsafe:integration-test -Dapp.properties=APP_PROPERTIES_FILE
 </pre>
+
+An admin must exist in the DB with username "testAdmin" and password "password." Create the user using the API so that the service can encrypt the password correctly, then manually set the user's authority to 1 in the DB.
 
 ##### Run application
 
