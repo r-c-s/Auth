@@ -8,12 +8,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import rcs.auth.api.models.LoginCredentials;
+import rcs.auth.api.models.UserAuthority;
 import rcs.auth.exceptions.UsernameAlreadyExistsException;
 import rcs.auth.exceptions.UsernameNotFoundException;
-import rcs.auth.models.api.LoginCredentials;
-import rcs.auth.models.db.UserAuthority;
-import rcs.auth.models.db.UserCredentials;
 import rcs.auth.repositories.UserCredentialsRepository;
+import rcs.auth.repositories.models.UserCredentials;
 
 import java.util.Optional;
 

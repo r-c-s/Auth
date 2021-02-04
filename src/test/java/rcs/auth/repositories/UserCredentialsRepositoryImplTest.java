@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import rcs.auth.models.db.UserAuthority;
-import rcs.auth.models.db.UserCredentials;
+import rcs.auth.api.models.UserAuthority;
+import rcs.auth.repositories.models.UserCredentials;
 import rcs.auth.testutils.InMemoryDataSourceTestBase;
 
 import static org.assertj.core.api.Assertions.assertThat;

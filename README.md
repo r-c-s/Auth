@@ -3,7 +3,9 @@
 A simple service for user authentication
 
 #### Dependencies
+* [AuthApi](https://github.com/r-c-s/AuthApi)
 * [MySQL](https://dev.mysql.com/downloads/)
+* AuthApi
 
 ##### Build
 

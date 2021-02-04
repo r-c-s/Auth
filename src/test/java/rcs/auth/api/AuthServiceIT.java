@@ -1,4 +1,4 @@
-package rcs.auth.apis;
+package rcs.auth.api;
 
 import net.bytebuddy.utility.RandomString;
 import org.junit.Before;
@@ -15,9 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import rcs.auth.models.api.AuthenticatedUser;
-import rcs.auth.models.api.LoginCredentials;
-import rcs.auth.models.db.UserAuthority;
+import rcs.auth.api.models.AuthenticatedUser;
+import rcs.auth.api.models.LoginCredentials;
+import rcs.auth.api.models.UserAuthority;
 
 import java.util.stream.Stream;
 

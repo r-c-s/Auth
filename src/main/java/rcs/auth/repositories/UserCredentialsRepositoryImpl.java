@@ -2,8 +2,8 @@ package rcs.auth.repositories;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import rcs.auth.models.db.UserAuthority;
-import rcs.auth.models.db.UserCredentials;
+import rcs.auth.api.models.UserAuthority;
+import rcs.auth.repositories.models.UserCredentials;
 
 import java.util.Map;
 

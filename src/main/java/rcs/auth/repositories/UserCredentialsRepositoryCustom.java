@@ -1,6 +1,6 @@
 package rcs.auth.repositories;
 
-import rcs.auth.models.db.UserAuthority;
+import rcs.auth.api.models.UserAuthority;
 
 public interface UserCredentialsRepositoryCustom {
 

@@ -10,11 +10,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>auth</groupId>
+    <groupId>rcs.auth</groupId>
     <artifactId>Auth</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>rcs.auth.api</groupId>
+            <artifactId>AuthApi</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

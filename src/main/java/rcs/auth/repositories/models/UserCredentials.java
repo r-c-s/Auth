@@ -1,10 +1,11 @@
-package rcs.auth.models.db;
+package rcs.auth.repositories.models;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import rcs.auth.api.models.UserAuthority;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

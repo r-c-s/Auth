@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import rcs.auth.models.api.AuthenticatedUser;
-import rcs.auth.models.api.UpdatePasswordRequest;
-import rcs.auth.models.api.LoginCredentials;
-import rcs.auth.models.db.UserAuthority;
+import rcs.auth.api.models.AuthenticatedUser;
+import rcs.auth.api.models.LoginCredentials;
+import rcs.auth.api.models.UpdatePasswordRequest;
+import rcs.auth.api.models.UserAuthority;
 import rcs.auth.services.UserCredentialsService;
 import rcs.auth.utils.AuthUtils;
 

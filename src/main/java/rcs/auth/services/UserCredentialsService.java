@@ -7,12 +7,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rcs.auth.api.models.LoginCredentials;
+import rcs.auth.api.models.UserAuthority;
 import rcs.auth.exceptions.FailedToUpdateUserException;
 import rcs.auth.exceptions.UsernameAlreadyExistsException;
 import rcs.auth.exceptions.UsernameNotFoundException;
-import rcs.auth.models.api.LoginCredentials;
-import rcs.auth.models.db.UserAuthority;
-import rcs.auth.models.db.UserCredentials;
+import rcs.auth.repositories.models.UserCredentials;
 import rcs.auth.repositories.UserCredentialsRepository;
 
 import java.util.stream.Collectors;
