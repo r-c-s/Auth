@@ -57,7 +57,7 @@ server.port=SERVER_PORT
 ##### Register
 
 <pre>
-curl -X POST host:port/auth/api/users -H "Content-type:application/json" -d "{"username":"USERNAME","password":"PASSWORD"}"
+curl -X POST host:port/auth/api/users -H "Content-type:application/json" -d "{\"username\":\"USERNAME\",\"password\":\"PASSWORD\"}"
 </pre>
 
 ##### Login
