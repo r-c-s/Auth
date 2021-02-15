@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>rcs.auth</groupId>
+    <groupId>rcs</groupId>
     <artifactId>Auth</artifactId>
     <version>1.0-SNAPSHOT</version>
     
