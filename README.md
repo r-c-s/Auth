@@ -1,10 +1,18 @@
 ## Auth
 
-A simple service for user authentication
+A simple SpringBoot service for user authentication
+
+<br>
+<hr>
+<br>
 
 #### Dependencies
-* [AuthApi](https://github.com/r-c-s/AuthApi)
+* [AuthApi](https://github.com/r-c-s/AuthApi) (for integration tests)
 * [MySQL](https://dev.mysql.com/downloads/)
+
+<br>
+<hr>
+<br>
 
 ##### Build
 
@@ -24,7 +32,7 @@ mvn test
 mvn clean test-compile failsafe:integration-test -Dapp.properties=APP_PROPERTIES_FILE
 </pre>
 
-Node: An admin must exist in the DB with username "testAdmin" and password "password." Create the user using the API so that the service can encrypt the password correctly, then manually set the user's authority to 1 in the DB.
+Node: An admin must exist in the DB with username "testAdmin" and password "password." Register the user using the REST API (see below) so that the service can encrypt the password correctly, then manually set the user's authority to 1 (corresponding to Admin) in the DB.
 
 ##### Run application
 
@@ -42,14 +50,18 @@ spring.datasource.password=PASSWORD
 server.port=SERVER_PORT
 </pre>
 
+<br>
+<hr>
+<br>
+
 ##### Register
 
 <pre>
-curl -X POST host:port/api/users -H "Content-type:application/json" -d "{"username":"USERNAME","password":"PASSWORD"}"
+curl -X POST host:port/auth/api/users -H "Content-type:application/json" -d "{"username":"USERNAME","password":"PASSWORD"}"
 </pre>
 
 ##### Login
 
 <pre>
-curl -X POST host:port/login -d "username=USERNAME&password=PASSWORD" -c cookies
+curl -X POST host:port/auth/login -d "username=USERNAME&password=PASSWORD" -c cookies
 </pre>
