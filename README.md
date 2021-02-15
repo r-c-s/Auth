@@ -2,17 +2,13 @@
 
 A simple SpringBoot service for user authentication
 
-<br>
 <hr>
-<br>
 
 #### Dependencies
 * [AuthApi](https://github.com/r-c-s/AuthApi) (for integration tests)
 * [MySQL](https://dev.mysql.com/downloads/)
 
-<br>
 <hr>
-<br>
 
 ##### Build
 
@@ -50,18 +46,16 @@ spring.datasource.password=PASSWORD
 server.port=SERVER_PORT
 </pre>
 
-<br>
 <hr>
-<br>
 
 ##### Register
 
 <pre>
-curl -X POST host:port/auth/api/users -H "Content-type:application/json" -d "{\"username\":\"USERNAME\",\"password\":\"PASSWORD\"}"
+curl -X POST host:port/api/users -H "Content-type:application/json" -d "{\"username\":\"USERNAME\",\"password\":\"PASSWORD\"}"
 </pre>
 
 ##### Login
 
 <pre>
-curl -X POST host:port/auth/login -d "username=USERNAME&password=PASSWORD" -c cookies
+curl -X POST host:port/login -d "username=USERNAME&password=PASSWORD" -c cookies
 </pre>
