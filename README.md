@@ -24,7 +24,7 @@ mvn test
 mvn clean test-compile failsafe:integration-test -Dapp.properties=APP_PROPERTIES_FILE
 </pre>
 
-An admin must exist in the DB with username "testAdmin" and password "password." Create the user using the API so that the service can encrypt the password correctly, then manually set the user's authority to 1 in the DB.
+Node: An admin must exist in the DB with username "testAdmin" and password "password." Create the user using the API so that the service can encrypt the password correctly, then manually set the user's authority to 1 in the DB.
 
 ##### Run application
 
@@ -40,4 +40,16 @@ spring.datasource.url=DATASOURCE_URL
 spring.datasource.username=USERNAME
 spring.datasource.password=PASSWORD
 server.port=SERVER_PORT
+</pre>
+
+##### Register
+
+<pre>
+curl -X POST host:port/api/users -H "Content-type:application/json" -d "{"username":"USERNAME","password":"PASSWORD"}"
+</pre>
+
+##### Login
+
+<pre>
+curl -X POST host:port/login -d "username=USERNAME&password=PASSWORD" -c cookies
 </pre>
