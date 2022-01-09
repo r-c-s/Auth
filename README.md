@@ -1,4 +1,4 @@
-## Auth
+## Authcom
 
 A simple SpringBoot service for user authentication
 
