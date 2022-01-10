@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>rcs</groupId>
-            <artifactId>AuthApi</artifactId>
+            <artifactId>auth-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
