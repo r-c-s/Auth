@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -14,15 +15,15 @@ import rcs.auth.security.EndpointSecurity;
 import rcs.auth.security.RestAuthenticationEntryPoint;
 import rcs.auth.services.UserCredentialsService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-
-    @Autowired
-    private AuthenticationSuccessHandler successHandler;
 
     @Autowired
     private AuthenticationFailureHandler failureHandler;
@@ -38,31 +39,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.cors()
+                .and()
+                .csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
 
-                .antMatchers(HttpMethod.GET, "/api/authenticate")
+                .antMatchers(HttpMethod.GET, "/authenticate")
                 .authenticated()
 
-                .antMatchers(HttpMethod.POST, "/api/users")
+                .antMatchers(HttpMethod.POST, "/register")
                 .permitAll()
 
-                .antMatchers(HttpMethod.PUT, "/api/users/{username}/password")
+                .antMatchers(HttpMethod.PUT, "/users/{username}/password")
                 .access("@endpointSecurity.canUpdatePassword(authentication, #username)")
 
-                .antMatchers(HttpMethod.PUT, "/api/users/{username}/authority")
+                .antMatchers(HttpMethod.PUT, "/users/{username}/authority")
                 .hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.DELETE, "/api/users/{username}")
+                .antMatchers(HttpMethod.DELETE, "/users/{username}")
                 .hasAuthority("ADMIN")
 
                 .and()
                 .formLogin()
-                .successHandler(successHandler)
+                .successHandler((request, response, authentication) -> { }) // disables redirect
                 .failureHandler(failureHandler)
                 .and()
                 .logout();

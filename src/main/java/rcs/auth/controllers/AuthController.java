@@ -2,6 +2,7 @@ package rcs.auth.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,6 @@ import rcs.auth.utils.AuthUtils;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
 public class AuthController {
 
     @Autowired
@@ -23,6 +23,15 @@ public class AuthController {
 
     @Autowired
     private UserCredentialsService userCredentialsService;
+
+    @PostMapping(
+            path = "/register",
+            consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+    public ResponseEntity<Void> createUser(LoginCredentials request) {
+        userCredentialsService.save(request);
+        return ResponseEntity.ok()
+                .build();
+    }
 
     @GetMapping("/authenticate")
     public ResponseEntity<AuthenticatedUser> getLoggedInUser() {
@@ -34,13 +43,6 @@ public class AuthController {
                                     .collect(Collectors.toSet())))
                 .map(authenticatedUser -> ResponseEntity.ok().body(authenticatedUser))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
-    }
-
-    @PostMapping("/users")
-    public ResponseEntity<Void> createUser(@RequestBody LoginCredentials request) {
-        userCredentialsService.save(request);
-        return ResponseEntity.ok()
-                .build();
     }
 
     @PutMapping("/users/{username}/password")
