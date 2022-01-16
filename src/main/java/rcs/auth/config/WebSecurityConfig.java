@@ -68,7 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler((request, response, authentication) -> { }) // disables redirect
                 .failureHandler(failureHandler)
                 .and()
-                .logout();
+                .logout()
+                .logoutSuccessHandler((request, response, authentication) -> { });
     }
 
     @Override
